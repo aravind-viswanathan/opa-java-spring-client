@@ -11,6 +11,7 @@ import security.build.pdp.response.PDPResponseHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PDPEnforcerTest {
     @InjectMocks
@@ -56,7 +57,9 @@ public class PDPEnforcerTest {
 
     @Test
     void AuthorizeRequest_ValidResponse_Authorized() throws Throwable {
-        resultMap.put("result", true);
+        Map<String, Object> subMap = new HashMap<>();
+        subMap.put("result", true);
+        resultMap.put("result", new HashMap<>().put("result", true));
 
         Boolean isAuthorized = pdpEnforcer.AuthorizeRequest(request, requirements);
         Assertions.assertEquals(isAuthorized, true);
